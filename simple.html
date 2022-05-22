@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <title>無理して削除Chatアプリ</title>
+    <!-- 518 scroll kinou tuika(overflow-y); -->
+    <style>
+        #text {
+            overflow-y: scroll;
+        };
+        #output {
+            overflow-y: scroll;
+        };
+    </style>
+</head>
+
+<body>
+    <!-- コンテンツ表示画面 -->
+    <h4>無理やりな削除ボタンつきチャットアプリ</h4>
+    <div>
+        お名前:<input type="text" id="uname">
+    </div>
+    <div>
+        <textarea name="" id="text" cols="30" rows="10"></textarea><br>
+        <button id="send">送信する</button><br>
+        <button id="sakujo">クリックして削除　→　左上の更新ボタンで再入力できるようになります</button><br>
+    </div>
+
+    <div id="output" cols="30" rows="10"></div>
+
+    <!--/ コンテンツ表示画面 -->
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!--** 以下Firebase **-->
+    
+    <script type="module">
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        //   nanika haru benri kinou yomikomi, ver wo soroeru;
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+            from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.8.1/firebase-database.min.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey:"",
+            authDomain: "fir-demo-33b8a.firebaseapp.com",
+            projectId: "fir-demo-33b8a",
+            storageBucket: "fir-demo-33b8a.appspot.com",
+            messagingSenderId: "305793847493",
+            appId: "1:305793847493:web:5efe704823f9a777eee0ac"
+        };
+
+        // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+
+            // ここに書き込む指示
+            // realtime db 初期設定
+
+            // app データベースを使う
+            const db = getDatabase(app);
+
+            // chat を参照するよう指示
+            const dbRef = ref(db, 'chat');
+
+            // 名前、本文欄のvalueをdbに送る（送信）
+            $('#send').on('click', function () {
+                alert('送信しますか？');
+                const msg = {
+                    uname: $('#uname').val(),
+                    text: $('#text').val(),
+                };
+
+                // newPostRefという名前で、dbのchatに書き込む
+                const newPostRef = push(dbRef);
+                set(newPostRef, msg);
+
+                // alert　に出す
+                const uname = $('#uname').val();
+                const text = $('#text').val();
+                alert(uname);
+                alert(text);
+            });
+
+            // dataという名前の関数操作。chatのdbにkeyとvalueを書き込む、
+            // for 文でも書ける
+            
+            // (lecture base)
+            // onChildAdded(dbRef, function (data) {
+            //     const msg = data.val();
+            //     const key = data.key;
+            //     console.log(msg, key);
+
+            //     // HTML outputのid欄に書き出し
+            //     const h = `<p>${msg.uname}: ${msg.text}</p>`;
+            //     $('#output').append(h);
+            // });
+
+            // 先生アドバイス書き換え(1)(key import)
+            onChildAdded(dbRef, function (data) {
+                const msg = data.val();
+                const key = data.key;
+                // id="${key} class="messages" を追記  
+                const h = `<p id="${key}" class="message">${msg.uname}: ${msg.text}</p>`;
+                $('#output').append(h);
+            });
+
+            // adv(2): <p>tag element onclick ==>> event(listen monitor);
+            $('#output').on('click', '.message', function () {
+                    alert('クリックされた！');
+                });
+
+            // remove を追加。<Remarks>タグごと消す（無理あり）
+            $('#sakujo').on('click', function () {
+                alert('削除しますか？');
+                alert('念のためお聞きします。削除してよろしいですか。');
+
+                const uname = $('#uname').val();
+                const text = $('#text').val();
+                alert('お名前は？' + uname);
+                alert('本文は？' + text);
+
+                const msg = { uname, text };
+                alert('msgは？' + msg);
+
+                // // html remove<parent>;
+                $('#uname').remove();
+                $('#text').remove();
+                $('#output').remove();
+
+                // html empty<child>;
+                $('#uname').empty();
+                $('#text').empty();
+                $('#output').empty();
+
+                // // remove 使う
+                // const removeRef = remove(dbRef);
+                // set(removeRef, msg);
+
+                // 先生アドバイス (3)
+                // $('#output').on('click', '.message', function () {
+                    // 1. pタグのid (=firebaseのキー情報)を取得
+                    //   →ヒント: クリックされた要素自体を取得するのは $(this) と書く
+
+                    // 2. キー情報を基にfirebaseのデータを削除する
+                    //   →ヒント: 一番最初firebaseの便利ツールとしてremove というメソッドを使います
+                    //    例えば chat の中にある aaaaa というキーのデータを削除したい場合、こんなふうに書きます
+                    //    remove(ref(db, `chat/aaaa`))
+                    // });
+
+                // adv(4)
+                // 削除が完了したHTMLデータを削除する
+                // onChildRemoved() を使うとfirebaseの削除処理が実行されたらキー情報を取得できます。
+                // キー情報が取得できたら、そのキー情報を持つ p タグを探し出して削除してもらえれば削除できそうですね？
+
+// insertion upto;
+}); 
+       
+        
+// 以下、うまくいかなかったコード
+    
+        // // 名前欄、本文欄にhtmlでnull書き込む
+        // $('#uname').html("");
+        // $('#text').html("");
+
+        // // 子要素のkey valueをdbRefから読み込む。remove
+        // onChildRemoved(dbRef, function (data) {
+        //     const msg = data.val();
+        //     const key = data.key;
+        //     alert('ChildRemoved msgは？keyは？'+  msg,key);
+        //     console.log(msg, key);
+        //     remove(msg);
+        // });
+
+        // // html欄をremove
+     
+    </script>
+</body>
+</html>
