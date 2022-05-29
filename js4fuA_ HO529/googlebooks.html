@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="css/sample.css">
+<title>GoogleBooks タイトル・著者名・出版社検索</title>
+</head>
+<body>
+
+  <header>
+    <h1>GoogleBooks　<br>
+      （１）タイトル　（２）著者名　（３）出版社　<br>
+      検索できます！</h1>
+    <p>
+      <input type="text" id="keyword" value="レスポンシブWeb"><br>
+    <!-- 読み込みボタンを作る -->
+      <button id="readbook">タイトル　読み込み</button>
+      <button id="readAuth">著者名　読み込み</button>
+      <button id="readPub">出版社　読み込み</button>
+    </p>
+    </header>
+    
+    <main>
+      <h3>（１）タイトル  　（２）著者名  　（３）出版社</h3>
+
+      <div class="narabi">
+        <p id="content" class="hyoji_ran"></p><br>
+        <p id="contAuth" class="hyoji_ran"></p><br>
+        <p id="contPub" class="hyoji_ran"></p>
+      </div>
+    </main>
+
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script>
+      
+    // $.get() を使って 情報を取得する
+    // [1] タイトル
+    // (1)title:タイトルデータをDBから持ってくる、関数を定義
+    function dataRead() {
+      $.get('https://www.googleapis.com/books/v1/volumes?q=JavaScript', function (data) {
+        console.log(data);
+    // (2)JSONデータ構造を基に本のタイトルを取得する
+        const items = data.items;
+        for (let i = 0; i < items.length; i++) {
+          console.log(items[i]);
+          const title = items[i].volumeInfo.title;
+    // (3) 本のタイトル情報をHTMLに出力する
+          $('#content').append(`<ul><li>${title}</li></ul>`)
+        }
+      })
+    }
+    //(4) クリックしたら、titleデータの呼び出しを実行
+    $("#readbook").on("click", dataRead);
+
+
+    // [2]著者名のケース
+    // (1)authors;著者名のデータをDBから持ってくる、関数を定義
+    function dataAuth() {
+      $.get('https://www.googleapis.com/books/v1/volumes?q=JavaScript', function (data) {
+        console.log(data);
+    // (2)JSONデータ構造を基に著者名を取得する
+        const items = data.items;
+        for (let i = 0; i < items.length; i++) {
+          console.log(items[i]);
+          const authors = items[i].volumeInfo.authors;
+    // (3) 著者名の情報をHTMLに出力する
+          $('#contAuth').append(`<ul><li>${authors}</li></ul>`)
+        }
+      })
+    }
+    //(4) クリックしたら、authorsのデータ呼び出しを実行
+    $("#readAuth").on("click", dataAuth);
+
+    //[3] 出版社
+    // (1)publiser;出版社のデータをDBから持ってくる、関数を定義
+    function dataPub() {
+      $.get('https://www.googleapis.com/books/v1/volumes?q=JavaScript', function (data) {
+        console.log(data);
+    // (2)JSONデータ構造を基に出版社名を取得する
+        const items = data.items;
+        for (let i = 0; i < items.length; i++) {
+          console.log(items[i]);
+          const publisher = items[i].volumeInfo.publisher;
+    // (3) 出版社の情報をHTMLに出力する
+      $('#contPub').append(`<ul><li>${publisher}</li></ul>`)
+        }
+      })
+    }
+    //(4) クリックしたら、publisherのデータ呼び出しを実行
+    $("#readPub").on("click", dataPub);
+
+// ---ここからは課題！
+// 4. クリックイベントで括る
+// 5. id="keyword"の入力値を取得 → URLの"?q=jquery"の"queryの文字を取得した入力値（変数）に変える"
+// <Remarks>これができなかった。
+// 6. 出版社も表示してみよう！（データ構造はconsole.logで確認！！）
+
+// $.get() を使う[開始]
+
+// $.get() を使う[終了]
+
+</script>
+</body>
+</html>

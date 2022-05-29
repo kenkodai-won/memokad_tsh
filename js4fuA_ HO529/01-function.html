@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex">
+    <title>関数：３つの数字を選んで足し算</title>
+</head>
+<body>
+    <h3>未完成：<br>
+        未1：セレクトした数字を抜き出せない<br>
+        未2：数字をfunctionに入れられない。<br>
+        （課題）</h3>
+    
+    <h4>ステップ１：３つのセレクトボタンから１つずつ数字を選んでください</h4>
+
+    <!-- select button -->
+    <div>
+        <select id="inputA"></select>
+        <select id="inputB"></select>
+        <select id="inputC"></select>
+    </div>
+
+    <p></p>
+
+    <button id="figSentaku">選択完了。数字決定！</button>
+
+    <!-- return value output -->
+    <p id="sentakuSuuji">数字A:'', 数字B:'', 数字C:''</p><br>
+ 
+    <h4>ステップ２：「クリック」ボタンを押してください。計算結果が出ます。</h4>
+
+    <button id="button">結果をクリック</button><br>
+
+    <p id="kekkaHyoji">計算結果:</p><br>
+
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script>
+
+        // I-1. 数字を選ぶ
+        alert('数字を選ぶ');
+
+        // inuput数字 A,B,C;
+        // (A):0-10;
+        let ipA_Num = '';
+        for (let i = 0; i < 11; i++) {
+            ipA_Num += `<option value="${i}">${i}</option>`;
+        }
+        console.log(ipA_Num);
+        $('#inputA').html(ipA_Num);
+
+        // (B):0-100;
+        let ipB_Num = '';
+        for (let i = 0; i < 101; i++) {
+            ipB_Num += `<option value="{i}">${i}</option>`;
+        }
+        console.log(ipB_Num);
+        $('#inputB').html(ipB_Num);
+
+        // (C):0-1000;
+        let ipC_Num = '';
+        for (let i = 0; i <= 1000; i++) {
+            ipC_Num += `<option value="{i}">${i}</option>`;
+        }
+        console.log(ipC_Num);
+        $('#inputC').html(ipC_Num);
+
+        // I-2.選んだ数字を抜き出す。代入する数字として確定
+            const figA = (inputA);
+                console.log(figA);
+            const figB = (inputB);
+                console.log(figB);
+            const figC = (inputC);
+                console.log(figC);
+        
+        // $("#figSentaku").on("click", function () {
+        //     const figA = html.getElementbyID('inputA');
+        //         console.log(figA);
+        //     const figB = html.getElementbyID('inputB');
+        //         console.log(figB);
+        //     const figC = html.getElementbyID('inputC');
+        //         console.log(figC);
+        //     });
+
+        // I-3.選んだ数字をHTML書き出し。
+        $('#sentakuSuuji').append(`<li>A:${figA}, B:${figB}, C:${figC}</li>`);
+
+        // II-1 計算式（関数）を定義。
+        function calc(a, b, c) {
+            const total = a + b + c;
+            return total;
+        }
+
+        // II-2.関数を実行。
+        const resultTotal = calc(figA, figB, figC);
+        console.log(resultTotal);
+
+        //II-3. クリックしたら計算結果を表示。
+
+        confirm("計算結果を表示しますか？　クリックボタンを押してください");
+        $("#button").on("click", function () {
+            $('#kekkaHyoji').html(`<li>(2)計算結果は、${resultTotal}です。</li>`);
+        });
+</script>
+
+</body>
+
+</html>
