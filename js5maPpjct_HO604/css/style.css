@@ -1,0 +1,118 @@
+@charset "utf-8";
+
+header {
+    background-color: white;
+    border-top: 1px solid #4d4d4d;
+    position: fixed;
+    bottom: 0;
+    padding: 12px;
+    width: 100%;
+}
+
+.block {
+    height: 200px;
+    background-color: #ddd;
+    margin: 12px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 200px;
+    font-size: 42px;
+}
+
+/* insert 604 */
+h3{
+    margin: 15px 350px;
+    border-radius: 10px;
+    border-color: yellow;
+    padding: 15px;
+    width: 45%;
+    font-size: 45px;
+    background-color:aquamarine;
+    text-align: center;
+    color:purple
+}
+
+p{
+    margin-left: 5px;
+}
+
+li{
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 10px;
+    list-style: circle;
+    font-size: 20px;
+    background-color: mintcream;
+}
+
+/* .btnNarabe{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+} */
+
+#nyuBtn{
+    margin-left:65px;
+    margin-right:55px; 
+    padding: 3px 0px 3px 25px;
+    width: 400px;
+    font-size: 25px;
+    background-color:wheat;
+
+}
+
+#idoImp, #keiImp{
+    margin: 5px 20px;
+    padding: 3px;
+    width: 75px;
+    height: 30px;
+    font-size: 25px;
+    background-color:blanchedalmond;
+    border: double;
+    border-radius: 5px;
+
+}
+
+#osaruImg{
+    margin-top: 5px;
+    margin-left: 55px;
+    padding-top: 15px;
+    /* width: 50px; */
+    /* height: auto; */
+}
+
+#clcIdoKei{
+    margin: 0px 50px;
+    padding-top: 5px;
+    width:650px;
+    height: 75px;
+    font-size: 25px;
+    border: double;
+    border-radius: 15px;
+}
+
+#view{
+    margin: 45px 40px;
+    padding-top: 22px;
+    padding-left: 20px;
+    height: 75px;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 35px;
+    color: deepskyblue;
+    background-color: beige;
+}
+
+#myMap{
+    margin-left: 20px;
+    padding-left: 20px;
+    border: groove;
+    border-width: 8px;
+    border-color: sandybrown;
+    border-radius: 50px;
+}
+footer{
+    text-align: right;
+    color: gray;
+}
